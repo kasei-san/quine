@@ -1,0 +1,31 @@
+eval$s=%w'
+x=20;y=10;
+m=[];0.upto(y*2){m<<([1]*(x*2+1))};
+w=[];
+0.upto(y-1){|i|
+  0.upto(x-1){|j|
+    m[i*2+1][j*2+1]=0;
+    if(i<y-1)then;w << [i,j,i+1,j];end;
+    if(j<x-1)then;w << [i,j,i,j+1];end;
+  };
+};
+c=(0..(x*y)-1).to_a;
+w.shuffle!;
+w.each{|(i,j,k,l)|
+  ri=c[i*x+j];
+  c_ri=c[k*x+l];
+  if(ri==c_ri);then;next;end;
+  if(i==k);then;m[i*2+1][j*2+2]=0;else;m[i*2+2][j*2+1]=0;end;
+  c.map!{|v|(v==ri)?c_ri:v};
+  if(c.uniq.size==1);then;k=false;break;end;
+};
+e="eval$s=%w"<<39<<($s*10);
+o="";
+j=0;
+m.each{|l|
+  o<<l.map{|v|(v==1)?e[(j+=2)-2,2]:(""<<32)*2}.join<<10;
+};
+o[-7,6]=""<<39<<".join";
+puts(o)
+#
+'.join
